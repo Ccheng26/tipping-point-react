@@ -14,8 +14,12 @@ export default class LocalRep extends Component {
     return this.state.polls.map(placeholder => {
       return(
         <div key={placeholder.img}>
-        <p>{placeholder.desc}</p>
-        <img alt="placeholder" style={imgStyle} src={placeholder.img} />
+          <p>{placeholder.race}</p>
+          <p>{placeholder.democrat}</p>
+          <p>{placeholder.dpercent}</p>
+          <p>{placeholder.republican}</p>
+          <p>{placeholder.rpercent}</p>
+          <img alt="placeholder" style={imgStyle} src={placeholder.img} />
         <hr />
         <br />
         </div>
