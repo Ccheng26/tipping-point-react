@@ -1,92 +1,48 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
-import { GEO, CIVIC } from '../util/api'
-
+import './Landing.css';
+// import {React_Boostrap_Carousel} from 'react-boostrap-carousel';
+import { Carousel } from 'react-bootstrap'
+// import '../css/bootstrap.min.css';
+// import '../css/react-boostrap-carousel.css';
 {/*import { findGeo } from '../util/geolocator.js';
  import field should be in geo locator area*/}
 
 export default class Landing extends Component {
-  constructor(){
-  super();
-  this.geoSuccess = this.geoSuccess.bind(this);
-  this.geoError = this.geoError.bind(this);
-  this.reverseLookUp= this.reverseLookUp.bind(this);
-  this.state ={
-    polls: null,
-    lat: "",
-    long: "",
-    address: ""
-    }
-
-  };
-
-  findGeo = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError)
-    } else {
-      alert("Looks like your browser doesn't support this functionality. Please enter it in the search field.")
-    }
-  };
-
-  geoSuccess(position){
-    this.setState({lat: position.coords.latitude, long: position.coords.longitude})
-    //alert(`${this.state.lat} ${this.state.long}`);
-  };
-  geoError(e){
-    console.log(e)
-    alert("Sorry we couldn't get your location")
-  };
-
-  reverseLookUp(){
-   var url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.lat},${this.state.long}&key=${GEO}`
-   console.log(url)
-   Axios.get(url)
-    .then(response => {
-      var address = response.data.results[0].formatted_address
-      var split = address.split(",")
-      var stateandzip= split[2].split(" ")
-      var line1 = split[0].replace(/\s+/g, '%20')
-      var city= split[1].replace(/\s+/g, '')
-      var state = stateandzip[1]
-      var zip= stateandzip[2]
-      this.setState({address: `${line1}%20${city}%20${state}`})
-      console.log(this.state.address)
-      console.log(`${GEO} ${CIVIC}`)
-    })
-    .then(()=>{
-      var civicurl=`https://www.googleapis.com/civicinfo/v2/representatives?address=${this.state.address}&key=${CIVIC}`
-      Axios.get(civicurl)
-        .then(response => {
-          console.log("civic firing")
-          console.log(response)
-        })
-    })
-    .catch(error=>{console.log(error);});
-  }
-
-
-  componentWillMount(){
-    if (this.state.lat !== ""){
-      this.reverseLookUp()
-    }
-  }
-
-  componentDidMount(){
-
-  }
-  componentDidUpdate(){
-
-  }
   render(){
+
+    const carouselInstance = (
+  <Carousel>
+    <Carousel.Item>
+      <img className="img-responsive" width={'100%'} height={300} alt="900x500" src="http://1.bp.blogspot.com/-BUrT0CP-6nQ/U1prUuv6VjI/AAAAAAAAFbY/a6PUNgNhSWM/s1600/1500x500-New-York-Skyline-Twitter-Header0017.jpg"/>
+      <Carousel.Caption>
+        <h3>In winner take all elections..</h3>
+        <p>One has to ask</p>
+      </Carousel.Caption>
+    </Carousel.Item>
+    <Carousel.Item>
+      <img className="img-responsive" width={'100%'} height={300} alt="900x500" src="http://1.bp.blogspot.com/-jBZKbiHI_2U/U1pszgzFAbI/AAAAAAAAFcI/8xrxWuBse9o/s1600/1500x500-New-York-Skyline-Twitter-Header0024.jpg"/>
+      <Carousel.Caption>
+        <h3>Does my vote still count?</h3>
+        <p>How can I make a difference?</p>
+      </Carousel.Caption>
+    </Carousel.Item>
+    <Carousel.Item>
+      <img className="img-responsive" width={'100%'} height={300} alt="900x500" src="http://mooxidesign.com/wp-content/uploads/2014/04/New-york-1500x500.jpg"/>
+      <Carousel.Caption>
+        <h3>Get Out There</h3>
+        <p><a className="btn btn-large btn-primary" href="/localrepresentative">Find a tipping point</a></p>
+      </Carousel.Caption>
+    </Carousel.Item>
+  </Carousel>
+);
+
     return (
       <div>
-        <h1 className="flow-text">Tipping Point</h1>
-        <br onClick={this.findGeo()} />
-        <button onClick={()=>{this.reverseLookUp()}}>+</button>
-        <button onClick={()=>{this.reverseLookUp()}}>-</button>
+      {carouselInstance}
       </div>
     )
   }
 }
+
 
 

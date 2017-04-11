@@ -13,9 +13,9 @@ export default class MyRep extends Component {
     const imgStyle = {maxWidth: '400px', maxHeight: '400px'}
     return this.state.polls.map(placeholder => {
       return(
-        <div key={placeholder.img}>
-        <p>{placeholder.desc}</p>
-        <img alt="placeholder" style={imgStyle} src={placeholder.img} />
+        <div key={placeholder.republican}>
+        <p>{placeholder.democrat}</p>
+
         <hr />
         <br />
         </div>

@@ -11,9 +11,9 @@ export default class LocalRep extends Component {
   }
   renderLocal(){
     const imgStyle = {maxWidth: '400px', maxHeight: '400px'}
-    return this.state.polls.map(placeholder => {
+    return this.state.polls.map((placeholder,index) => {
       return(
-        <div key={placeholder.img}>
+        <div key={index}>
           <p>{placeholder.race}</p>
           <p>{placeholder.democrat}</p>
           <p>{placeholder.dpercent}</p>

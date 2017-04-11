@@ -1,0 +1,14 @@
+.carousel{
+  overflow: inherit;
+  height:auto;
+}
+.carousel-inner{
+/*  padding-top: 64px;*/
+}
+
+.item{
+  height:auto;
+}
+.img-responsive{
+  height:300px;
+}
