@@ -12,3 +12,17 @@
 .img-responsive{
   height:300px;
 }
+.infoStyle{
+  width: 50%;
+  display: inline-block;
+}
+.bodyStyle{
+  padding-right: 5%;
+  padding-left: 5%;
+}
+
+
+*, *:before, *:after {
+    box-sizing: inherit;
+    vertical-align: middle;
+}

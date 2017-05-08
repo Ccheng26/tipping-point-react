@@ -6,6 +6,7 @@ import { GEO, CIVIC } from '../util/api'
 export default class App extends Component {
   constructor(props){
   super(props);
+  this.findGeo= this.findGeo.bind(this)
   this.geoSuccess = this.geoSuccess.bind(this);
   this.geoError = this.geoError.bind(this);
   this.reverseLookUp= this.reverseLookUp.bind(this);
@@ -13,13 +14,15 @@ export default class App extends Component {
     polls: null,
     lat: "",
     long: "",
-    address: ""
+    address: "",
+    repinfo: null
     }
 
   };
 
   findGeo = () => {
     if ("geolocation" in navigator) {
+      console.log("geolog")
       navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError)
     } else {
       alert("Looks like your browser doesn't support this functionality. Please enter it in the search field.")
@@ -27,8 +30,10 @@ export default class App extends Component {
   };
 
   geoSuccess(position){
+
     this.setState({lat: position.coords.latitude, long: position.coords.longitude})
-    //alert(`${this.state.lat} ${this.state.long}`);
+    // alert(`${this.state.lat} ${this.state.long}`);
+    this.reverseLookUp();
   };
   geoError(e){
     console.log(e)
@@ -48,17 +53,21 @@ export default class App extends Component {
       var state = stateandzip[1]
       var zip= stateandzip[2]
       this.setState({address: `${line1}%20${city}%20${state}`})
-      console.log(this.state.address)
-      console.log(`${GEO} ${CIVIC}`)
+      // console.log(this.state)
+      // console.log(this.state.address)
+      // console.log(`${GEO} ${CIVIC}`)
     })
-    .then(()=>{
-      var civicurl=`https://www.googleapis.com/civicinfo/v2/representatives?address=${this.state.address}&key=${CIVIC}`
-      Axios.get(civicurl)
-        .then(response => {
-          console.log("civic firing")
-          console.log(response)
-        })
-    })
+    // .then(()=>{
+    //   var civicurl=`https://www.googleapis.com/civicinfo/v2/representatives?address=${this.state.address}&key=${CIVIC}`
+    //   if(`${this.state.address}` !== "undefined"){
+    //     Axios.get(civicurl)
+    //     .then(response => {
+    //       console.log("civic firing")
+    //       console.log(response)
+    //     })
+    //   }
+
+    // })
     .catch(error=>{console.log(error);});
   }
 
@@ -66,6 +75,8 @@ export default class App extends Component {
   componentWillMount(){
     if (this.state.lat !== ""){
       this.reverseLookUp()
+    } else{
+      this.findGeo()
     }
   }
 
@@ -76,16 +87,30 @@ export default class App extends Component {
 
   }
   render(props,index){
-    return(
-      <div
-    className="App"
+      var children = React.Children.map(this.props.children, function (child) {
+    return React.cloneElement(child, {
+      // location: this.props.children
+    })
+  })
 
-    >
-      <Navbar key={index}/>
-      {this.props.children}
-      { console.log(this.props.children) }
-    </div>
-      )
-
-  }
+  return <div className="App">
+  <Navbar key={index}/>
+  {children}
+  </div>
 }
+}
+
+
+//     return(
+//       <div
+//     className="App"
+
+//     >
+//       <Navbar key={index}/>
+//       {this.props.children}
+//       { /*console.log(this.props.children) */}
+//     </div>
+//       )
+
+//   }
+// }

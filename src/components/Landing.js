@@ -30,7 +30,7 @@ export default class Landing extends Component {
       <img className="img-responsive" width={'100%'} height={300} alt="900x500" src="http://mooxidesign.com/wp-content/uploads/2014/04/New-york-1500x500.jpg"/>
       <Carousel.Caption>
         <h3>Get Out There</h3>
-        <p><a className="btn btn-large btn-primary" href="/localrepresentative">Find a tipping point</a></p>
+        <p><a className="btn btn-large btn-primary" href="/localrepresentatives">Find a tipping point</a></p>
       </Carousel.Caption>
     </Carousel.Item>
   </Carousel>
